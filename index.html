@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kairos ご提案 | がるるんとす様 商品紹介LP制作</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Noto+Sans+JP:wght@300;400;500;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --wool:#F3EFE4;
+    --wool-soft:#FAF8F1;
+    --fog:#DCE3D8;
+    --sage:#8FA383;
+    --sage-deep:#6E8768;
+    --pine:#3C4A38;
+    --charcoal:#40403A;
+    --wood:#AD8E60;
+    --sky:#C9D6CE;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Noto Sans JP',sans-serif;
+    color:var(--charcoal);
+    background:var(--wool);
+    line-height:1.85;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{
+    font-family:'Zen Maru Gothic',sans-serif;
+    color:var(--pine);
+  }
+  .eyebrow{
+    font-family:'Quicksand',sans-serif;
+    letter-spacing:.18em;
+    font-size:.72rem;
+    color:var(--sage-deep);
+    text-transform:uppercase;
+    font-weight:700;
+  }
+  a{color:inherit;}
+  img{display:none;}
+
+  /* ===== 羊パーツ（CSSのみ）===== */
+  .sheep{
+    position:relative;
+    width:46px;height:30px;
+  }
+  .sheep::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:var(--wool-soft);
+    border-radius:50% 50% 45% 45%/60% 60% 40% 40%;
+    box-shadow:
+      -14px 4px 0 -2px var(--wool-soft),
+      14px 4px 0 -2px var(--wool-soft),
+      0 -6px 0 -4px var(--wool-soft);
+    border:2px solid var(--sage-deep);
+  }
+  .sheep::after{
+    content:"";
+    position:absolute;
+    left:-6px;top:6px;
+    width:14px;height:12px;
+    background:var(--pine);
+    border-radius:50% 40% 50% 50%;
+  }
+  .sheep .legs span{
+    position:absolute;
+    bottom:-9px;
+    width:3px;height:10px;
+    background:var(--pine);
+    border-radius:2px;
+  }
+  .sheep .legs span:nth-child(1){left:8px;}
+  .sheep .legs span:nth-child(2){left:18px;}
+  .sheep .legs span:nth-child(3){left:28px;}
+  .sheep .legs span:nth-child(4){left:36px;}
+
+  /* ===== ヒーロー ===== */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:120px 24px 180px;
+    background:
+      radial-gradient(ellipse at 20% 10%, rgba(255,255,255,.5), transparent 55%),
+      linear-gradient(180deg, var(--sky) 0%, var(--fog) 45%, var(--sage) 110%);
+    overflow:hidden;
+  }
+  .hero::before{ /* 奥の丘 */
+    content:"";
+    position:absolute;
+    bottom:-20px;left:-10%;
+    width:120%;height:220px;
+    background:var(--sage-deep);
+    opacity:.35;
+    border-radius:50% 50% 0 0/100% 100% 0 0;
+  }
+  .hero::after{ /* 手前の丘 */
+    content:"";
+    position:absolute;
+    bottom:-40px;left:-10%;
+    width:120%;height:170px;
+    background:var(--pine);
+    opacity:.5;
+    border-radius:45% 55% 0 0/100% 100% 0 0;
+  }
+  .hero-inner{
+    position:relative;
+    z-index:2;
+    max-width:760px;
+    text-align:center;
+  }
+  .hero-flock{
+    display:flex;
+    gap:28px;
+    justify-content:center;
+    margin-bottom:34px;
+    opacity:.9;
+  }
+  .hero-flock .sheep:nth-child(2){transform:scale(1.15);}
+  .hero-flock .sheep:nth-child(3){transform:scale(.85);}
+
+  .hero h1{
+    font-size:clamp(2rem, 5vw, 3.1rem);
+    font-weight:900;
+    line-height:1.55;
+    margin:18px 0 22px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    position:relative;
+    display:inline-block;
+  }
+  .hero h1 em::after{
+    content:"";
+    position:absolute;
+    left:-4px;right:-4px;bottom:2px;
+    height:38%;
+    background:rgba(143,163,131,.45);
+    z-index:-1;
+    border-radius:4px;
+  }
+  .hero p.lead{
+    font-size:1.02rem;
+    color:var(--pine);
+    max-width:560px;
+    margin:0 auto;
+  }
+  .hero .from{
+    margin-top:38px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:rgba(255,255,255,.55);
+    border:1px solid rgba(60,74,56,.25);
+    padding:10px 22px;
+    border-radius:40px;
+    font-family:'Quicksand',sans-serif;
+    font-weight:600;
+    font-size:.88rem;
+    color:var(--pine);
+    backdrop-filter:blur(2px);
+  }
+  .from .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--wood);
+  }
+
+  /* ===== 共通セクション ===== */
+  section{
+    padding:90px 24px;
+    position:relative;
+  }
+  .wrap{
+    max-width:980px;
+    margin:0 auto;
+  }
+  .section-head{
+    text-align:center;
+    margin-bottom:56px;
+  }
+  .section-head h2{
+    font-size:clamp(1.5rem,3.4vw,2.1rem);
+    margin-top:10px;
+    font-weight:700;
+  }
+  .divider{
+    width:56px;height:3px;
+    background:var(--wood);
+    margin:0 auto;
+    border-radius:2px;
+  }
+
+  /* ===== 理解セクション ===== */
+  .understand{
+    background:var(--wool-soft);
+    border-top:1px solid var(--fog);
+    border-bottom:1px solid var(--fog);
+  }
+  .understand-card{
+    background:var(--wool);
+    border:1px solid var(--fog);
+    border-radius:20px;
+    padding:44px clamp(24px,5vw,56px);
+    position:relative;
+  }
+  .understand-card::before{
+    content:"🌿";
+    position:absolute;
+    top:-20px;left:36px;
+    font-size:1.6rem;
+    background:var(--wool-soft);
+    padding:6px 10px;
+    border-radius:50%;
+    border:1px solid var(--fog);
+  }
+  .understand-card p{
+    margin-bottom:18px;
+    font-size:1rem;
+  }
+  .understand-card p:last-child{margin-bottom:0;}
+  .understand-card strong{
+    color:var(--pine);
+    font-weight:700;
+    border-bottom:2px solid var(--sage);
+  }
+
+  /* ===== 価値セクション ===== */
+  .values{
+    background:
+      linear-gradient(180deg, var(--wool) 0%, var(--fog) 100%);
+  }
+  .value-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:26px;
+  }
+  .value-card{
+    background:var(--wool-soft);
+    border-radius:18px;
+    padding:32px 26px;
+    border:1px solid var(--fog);
+    transition:transform .25s ease, box-shadow .25s ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .value-card::after{
+    content:"";
+    position:absolute;
+    right:-30px;bottom:-30px;
+    width:90px;height:90px;
+    background:var(--sage);
+    opacity:.12;
+    border-radius:50%;
+  }
+  .value-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 18px 30px -16px rgba(60,74,56,.35);
+  }
+  .value-num{
+    font-family:'Quicksand',sans-serif;
+    font-weight:700;
+    color:var(--sage);
+    font-size:1.6rem;
+    margin-bottom:10px;
+    display:block;
+  }
+  .value-card h3{
+    font-size:1.08rem;
+    margin-bottom:10px;
+  }
+  .value-card p{
+    font-size:.92rem;
+    color:var(--charcoal);
+  }
+
+  /* ===== スケジュール ===== */
+  .flow{
+    background:var(--pine);
+    color:var(--wool-soft);
+  }
+  .flow .section-head h2{color:var(--wool-soft);}
+  .flow .section-head .eyebrow{color:var(--sky);}
+  .flow .divider{background:var(--wood);}
+  .timeline{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+  .step{
+    display:grid;
+    grid-template-columns:70px 1fr;
+    gap:24px;
+    padding:26px 0;
+    border-bottom:1px solid rgba(255,255,255,.15);
+  }
+  .step:last-child{border-bottom:none;}
+  .step-num{
+    font-family:'Quicksand',sans-serif;
+    font-size:1.5rem;
+    font-weight:700;
+    color:var(--sage);
+    display:flex;
+    align-items:flex-start;
+  }
+  .step-body h3{
+    color:var(--wool-soft);
+    font-size:1.05rem;
+    margin-bottom:6px;
+  }
+  .step-body p{
+    color:var(--sky);
+    font-size:.92rem;
+  }
+  .step-body .tag{
+    display:inline-block;
+    margin-top:8px;
+    font-family:'Quicksand',sans-serif;
+    font-size:.74rem;
+    letter-spacing:.05em;
+    background:rgba(255,255,255,.1);
+    padding:4px 12px;
+    border-radius:20px;
+    color:var(--wool-soft);
+  }
+
+  /* ===== こんな想いに応えます ===== */
+  .fit{
+    background:var(--wool);
+  }
+  .fit-list{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:18px;
+  }
+  .fit-item{
+    background:var(--wool-soft);
+    border:1px dashed var(--sage);
+    border-radius:16px;
+    padding:20px;
+    font-size:.92rem;
+    text-align:center;
+    color:var(--pine);
+    font-weight:500;
+  }
+
+  /* ===== クロージング ===== */
+  .closing{
+    background:
+      radial-gradient(circle at 50% 0%, rgba(255,255,255,.5), transparent 60%),
+      linear-gradient(160deg, var(--sage) 0%, var(--sage-deep) 60%, var(--pine) 120%);
+    text-align:center;
+    padding:110px 24px 130px;
+    position:relative;
+    overflow:hidden;
+  }
+  .closing::before{
+    content:"";
+    position:absolute;
+    top:30px;left:50%;
+    transform:translateX(-50%);
+    width:140px;height:140px;
+    border:1px solid rgba(255,255,255,.4);
+    border-radius:50%;
+  }
+  .closing h2{
+    color:var(--wool-soft);
+    font-size:clamp(1.6rem,4vw,2.3rem);
+    margin:14px 0 18px;
+  }
+  .closing p{
+    color:var(--wool-soft);
+    opacity:.92;
+    max-width:520px;
+    margin:0 auto 36px;
+    font-size:.98rem;
+  }
+  .cta-btn{
+    display:inline-block;
+    background:var(--wool-soft);
+    color:var(--pine);
+    font-weight:700;
+    font-family:'Zen Maru Gothic',sans-serif;
+    padding:17px 46px;
+    border-radius:50px;
+    text-decoration:none;
+    box-shadow:0 14px 30px -12px rgba(0,0,0,.4);
+    transition:transform .2s ease;
+    letter-spacing:.03em;
+  }
+  .cta-btn:hover{transform:translateY(-3px);}
+  .closing .note{
+    margin-top:26px;
+    font-size:.8rem;
+    color:var(--wool-soft);
+    opacity:.75;
+  }
+
+  footer{
+    background:var(--pine);
+    color:var(--sky);
+    text-align:center;
+    padding:30px 20px;
+    font-size:.78rem;
+    font-family:'Quicksand',sans-serif;
+    letter-spacing:.05em;
+  }
+
+  @media (max-width:640px){
+    section{padding:70px 20px;}
+    .hero{padding:100px 20px 150px;}
+    .step{grid-template-columns:50px 1fr;}
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-flock">
+      <div class="sheep"><div class="legs"><span></span><span></span><span></span><span></span></div></div>
+      <div class="sheep"><div class="legs"><span></span><span></span><span></span><span></span></div></div>
+      <div class="sheep"><div class="legs"><span></span><span></span><span></span><span></span></div></div>
+    </div>
+    <p class="eyebrow">Proposal for がるるんとす様</p>
+    <h1>その商品だけが持つ表情を、<br><em>やさしく、丁寧に</em>、形にします。</h1>
+    <p class="lead">商品紹介LP制作のご依頼を拝見し、デザインチーム Kairos よりご提案させていただきます。「初めての方も安心して」という想いに、私たちも同じ熱量でお応えしたいと思いました。</p>
+    <div class="from">
+      <span class="dot"></span>
+      Kairos Design Team
+    </div>
+  </div>
+</section>
+
+<section class="understand">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Understanding</p>
+      <h2>募集文を読んで、まず感じたこと</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="understand-card">
+      <p>「見た目の美しさだけでなく、商品の特徴や良さがしっかり伝わるページを」という一文に、がるるんとす様が商品にかけてきた想いの深さを感じました。デザインは装飾ではなく、<strong>商品の言葉を代弁する手段</strong>であるべきだと、私たちも同じように考えています。</p>
+      <p>また「制作経験は問いません」「丁寧なやり取りを大切に」という言葉から、スキルの有無よりも<strong>信頼できる進め方</strong>を重視されていることが伝わってきました。構成案・原稿・素材はご用意いただけるとのことですので、Kairosはそれを最大限活かし、<strong>配色・レイアウト・AI画像生成</strong>の部分で商品の魅力を引き出す役割を担わせていただければと考えています。</p>
+      <p>羊が一頭ずつ違う表情を持つように、商品にもそれぞれの「らしさ」があります。その一つひとつに向き合う制作を、ご一緒できれば嬉しいです。🐏</p>
+    </div>
+  </div>
+</section>
+
+<section class="values">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">What We Offer</p>
+      <h2>Kairosがご提供できること</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="value-grid">
+      <div class="value-card">
+        <span class="value-num">01</span>
+        <h3>構成案を活かした緻密なビジュアル化</h3>
+        <p>ご用意いただく構成案・原稿の意図を丁寧に汲み取り、情報の優先順位を崩さずにデザインへ落とし込みます。</p>
+      </div>
+      <div class="value-card">
+        <span class="value-num">02</span>
+        <h3>AI画像生成・合成の実践力</h3>
+        <p>商品写真が少ない場合でも、AIを活用した画像生成・合成で世界観を補い、説得力のあるビジュアルに仕上げます。</p>
+      </div>
+      <div class="value-card">
+        <span class="value-num">03</span>
+        <h3>読む人の感情を動かす配色・レイアウト</h3>
+        <p>商品のトーンに合わせた配色設計とリズムのあるレイアウトで、流し読みでも魅力が伝わる構成にします。</p>
+      </div>
+      <div class="value-card">
+        <span class="value-num">04</span>
+        <h3>Photoshop / Illustratorでの丁寧な仕上げ</h3>
+        <p>細部の調整まで妥協せず、修正2回を見据えた効率的な制作フローでスケジュールを守ります。</p>
+      </div>
+      <div class="value-card">
+        <span class="value-num">05</span>
+        <h3>相談しやすいコミュニケーション</h3>
+        <p>進捗や意図のすり合わせをこまめに行い、「言った・言わない」のすれ違いが起きないように進めます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="flow">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Our Process</p>
+      <h2>進め方とスケジュールの目安</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="timeline">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h3>ヒアリング・素材確認</h3>
+          <p>構成案・原稿・画像素材をお預かりし、商品の魅力や伝えたいトーンをすり合わせます。</p>
+          <span class="tag">目安：1〜2日</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h3>ラフレイアウト・配色のご提案</h3>
+          <p>全体の構成とトーンを簡易案でご確認いただき、方向性をすり合わせます。</p>
+          <span class="tag">目安：2〜3日</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h3>デザイン制作</h3>
+          <p>AI画像生成・合成を含め、Photoshop/Illustratorで本制作を進めます。</p>
+          <span class="tag">目安：4〜6日</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h3>フィードバック・修正（2回程度）</h3>
+          <p>ご確認いただいた内容をもとに、細部の調整を丁寧に反映します。</p>
+          <span class="tag">目安：2〜3日</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div class="step-body">
+          <h3>納品</h3>
+          <p>データ一式をお渡しし、商品の魅力が伝わるLPの完成です。</p>
+          <span class="tag">合計目安：2〜2.5週間</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="fit">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">A Good Match</p>
+      <h2>こんな想いに、Kairosは応えたいと思っています</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="fit-list">
+      <div class="fit-item">はじめての挑戦も歓迎したい</div>
+      <div class="fit-item">丁寧なやり取りを大切にしたい</div>
+      <div class="fit-item">商品の魅力をきちんと言語化したい</div>
+      <div class="fit-item">一緒に試行錯誤しながら作りたい</div>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <p class="eyebrow" style="color:var(--wool-soft);">Next Step</p>
+    <h2>まずは、お気軽にお話しさせてください</h2>
+    <p>構成案や素材を拝見しながら、具体的な雰囲気やスケジュールのすり合わせから始められればと思います。がるるんとす様の商品が持つ物語を、一緒に形にできることを楽しみにしています。</p>
+    <a href="#" class="cta-btn">Kairosに相談してみる</a>
+    <p class="note">ご応募・ご質問、お気軽にお寄せください🌿</p>
+  </div>
+</section>
+
+<footer>
+  KAIROS — Web制作・システム開発チーム ｜ Proposal for がるるんとす様
+</footer>
+
+</body>
+</html>
